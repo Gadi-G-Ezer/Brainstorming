@@ -31,7 +31,7 @@ def create_html_file(dest_dir: str):
             if name[-4:] == '.jpg':
                 f.write(f'<img src="img{i}.jpg">')
         f.write('\n</body></html>')
-    print(f'Everything is ready :)\nopen the HTML file and discover the photo!!!\n(HTML file is at:{dest_dir} )')
+    print(f'Everything is ready :)\nopen the HTML file and discover the photo!!!\n(HTML file is at: {dest_dir} )\n\n')
 
 
 def sort_url_key(url: str):
@@ -74,13 +74,17 @@ def download_images(img_urls, dest_dir):
     if not os.path.exists(dest_dir):
         os.makedirs(dest_dir)
     else:
+        print(f'file "{dest_dir}" already exist!\n we first remove all existing .jpg file')
         for file in os.listdir(dest_dir):
             if file[-4:] == '.jpg':
                 os.remove(os.path.join(dest_dir, file))
+        print(f'all .jpg files in {dest_dir} were successfully removed :)')
 
+    print('start downloading the images. this could take a while ...\n')
     for index, url in enumerate(img_urls):
         try:
             img_file_name = os.path.join(dest_dir, f'img{index}.jpg')
+            print(f"now downloading file: img{index}.jpg.")
             urlretrieve(url, img_file_name)
         except BaseException as error:
             print('Error: at "download_images" function. ', error)
