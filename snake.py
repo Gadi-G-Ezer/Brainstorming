@@ -28,16 +28,15 @@ def decipher(text: str):
     :param text:
     """
     original_text = ""
-    active_cipher_dict = dict(zip(CIPHER_DICT.values(), CIPHER_DICT.keys()))
     # step 1
-    switch_words_around_newline = re.sub(r'([a-zA-Z.]+)(\n+)([a-zA-Z.]+)', r'\3\2\1', text)
+    active_cipher_dict = dict(zip(CIPHER_DICT.values(), CIPHER_DICT.keys()))
     # step 2
-    getting_back_space = re.sub(r'\d+', ' ', switch_words_around_newline)
+    switch_words_around_newline = re.sub(r'([a-zA-Z.]+)(\n+)([a-zA-Z.]+)', r'\3\2\1', STRING)
     # step 3
-    for line in getting_back_space.split('\n'):
+    for line in switch_words_around_newline.split('\n'):
         original_text += " ".join(
             ["".join(map(lambda a: active_cipher_dict[a] if a in active_cipher_dict.keys() else a, word))[::-1]
-             for word in line.split()]) + '\n'
+             for word in re.split(r'\d+', line)]) + '\n'
     return original_text
 
 
