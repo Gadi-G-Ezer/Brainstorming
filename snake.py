@@ -35,8 +35,7 @@ def decipher(text: str):
     # step 3
     for line in switch_words_around_newline.split('\n'):
         original_text += " ".join(
-            ["".join(map(lambda a: active_cipher_dict[a] if a in active_cipher_dict.keys() else a, word))[::-1]
-             for word in re.split(r'\d+', line)]) + '\n'
+            ["".join(map(lambda a: active_cipher_dict.get(a, a), word))[::-1] for word in re.split(r'\d+', line)]) + '\n'
     return original_text
 
 
